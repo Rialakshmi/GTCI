@@ -1,0 +1,30 @@
+import java.util.*;
+
+class MaxFruitCountOf2Types {
+  public static int findLength(char[] arr) {
+    int max=0;
+    int startWindow=0;
+    HashMap<Character,Integer> hm=new HashMap<>();
+    for(int endWindow=0;endWindow<arr.length;endWindow++) {
+      char right=arr[endWindow];
+      hm.put(right,hm.getOrDefault(right,0)+1);
+      if(hm.size()==2) {
+        int currmax=0;
+        for(Map.Entry e:hm.entrySet()) {
+          currmax += (int)e.getValue();
+        }
+        max=Math.max(max,currmax);
+      }
+      while(hm.size()>2) {
+        char left=arr[startWindow++];
+        int count=hm.get(left);
+        if(count==1) {
+          hm.remove(left);
+        }else {
+          hm.put(left,count-1);
+        }
+      }
+    }
+    return max;
+  }
+}
