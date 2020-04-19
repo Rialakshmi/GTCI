@@ -1,0 +1,19 @@
+import java.util.*;
+
+class NoRepeatSubstring {
+  public static int findLength(String str) {
+    int max=0;
+    HashSet<Character> hs=new HashSet<>();
+    int startWindow=0;
+    for(int endWindow=0;endWindow<str.length();endWindow++) {
+      char right=str.charAt(endWindow);
+      while(hs.contains(right)) {
+        char left=str.charAt(startWindow++);
+        hs.remove(left);
+      }
+      hs.add(right);
+      max=Math.max(max,hs.size());
+    }
+    return max;
+  }
+}
