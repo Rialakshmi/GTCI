@@ -1,0 +1,25 @@
+/*
+Given an array containing 0s and 1s, if you are allowed to replace no more than ‘k’ 0s with 1s, find the length of the longest contiguous subarray having all 1s.
+*/
+class ReplacingOnes {
+  public static int findLength(int[] nums, int k) {
+    int max1=0;
+        int max=0;
+        int startWindow=0;
+        for(int endWindow=0;endWindow<nums.length;endWindow++) {
+            if(nums[endWindow]==1) {
+                max1++;
+            }
+            
+            while(endWindow-startWindow+1-max1>k) {
+                if(nums[startWindow]==1)
+                    max1--;
+                startWindow++;
+            }
+            
+            max = Math.max(max, endWindow-startWindow+1);
+        }
+        
+        return max;
+  }
+}
