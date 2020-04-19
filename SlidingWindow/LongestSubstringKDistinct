@@ -1,0 +1,28 @@
+import java.util.*;
+
+class LongestSubstringKDistinct {
+  public static int findLength(String str, int k) {
+    // TODO: Write your code here
+    HashMap<Character,Integer> hm=new HashMap<>();
+    int startWindow=0;
+    int maxLength=0;
+    for(int endWindow=0;endWindow<str.length();endWindow++) {
+      char right=str.charAt(endWindow);
+      hm.put(right,hm.getOrDefault(right,0)+1);
+      if(hm.size()==k) {
+        maxLength=Math.max(maxLength,endWindow-startWindow+1);
+      }
+      while(hm.size()>k) {
+        char left=str.charAt(startWindow);
+        int count=hm.get(left);
+        if(count>1) {
+            hm.put(left,count-1);
+        }else if(count==1) {
+          hm.remove(left);
+        }
+        startWindow++;
+      }
+    }
+    return maxLength;
+  }
+}
