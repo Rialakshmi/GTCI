@@ -1,0 +1,20 @@
+/*
+Problem Statement 
+Given a string with lowercase letters only, if you are allowed to replace no more than ‘k’ letters with any letter, find the length of the longest substring having the same letters after replacement.
+*/
+class CharacterReplacement {
+  public static int findLength(String str, int k) {
+    char[] char_count=new char[128];
+    int startWindow=0;
+    int maxChar=0;
+    int maxLength=0;
+    for(int endWindow=0;endWindow<str.length();endWindow++) {
+      maxChar = Math.max(maxChar,++char_count[str.charAt(endWindow)]);
+      while(endWindow-startWindow+1-maxChar>k) {
+        char_count[str.charAt(startWindow++)]--;
+      } 
+      maxLength=Math.max(maxLength,endWindow-startWindow+1);
+    }
+    return maxLength;
+  }
+}
