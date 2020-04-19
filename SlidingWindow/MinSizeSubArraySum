@@ -1,0 +1,19 @@
+class MinSizeSubArraySum {
+  public static int findMinSubArray(int S, int[] arr) {
+    int sum=0;
+    int startWindow=0;
+    int minLength=arr.length;
+    int minStart=0;
+    int minEnd=0;
+    for(int endWindow=0;endWindow<arr.length;endWindow++) {
+      sum += arr[endWindow];
+      while(sum>=S) {
+        sum -=arr[startWindow];
+          minLength=Math.min(endWindow-startWindow+1,minLength);
+          startWindow++;
+        
+      }
+    }
+    return minLength;
+  }
+}
