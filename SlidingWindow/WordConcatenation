@@ -1,0 +1,35 @@
+import java.util.*;
+
+/*
+Words Concatenation (hard) 
+Given a string and a list of words, find all the starting indices of substrings in the given string that are a concatenation of all the given words exactly once without any overlapping of words. It is given that all words are of the same length.
+*/
+class WordConcatenation {
+  public static List<Integer> findWordConcatenation(String s, String[] words) {
+     List<Integer> indices=new ArrayList<>();
+     if(s.isEmpty()||words.length==0)
+         return indices;
+        HashMap<String,Integer> hm=new HashMap<>();
+        for(String word:words) {
+            hm.put(word,hm.getOrDefault(word,0)+1);
+        }
+        int word_length=words[0].length();
+        int words_count=words.length;
+        for(int i=0;i<=s.length() - words_count*word_length;i++) {
+            HashMap<String,Integer> seen=new HashMap<>();
+            for(int j=0;j<words_count;j++) {
+                int index_start=i+j*word_length;
+                String sub=s.substring(index_start,index_start+word_length);
+                if(!hm.containsKey(sub)) 
+                    break;
+                seen.put(sub,seen.getOrDefault(sub,0)+1);
+                if(hm.getOrDefault(sub,0)<seen.get(sub))
+                    break;
+                if(j+1==words_count)
+                    indices.add(i);
+            }
+        }
+        
+        return indices;
+  }
+}
