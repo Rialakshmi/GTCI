@@ -1,0 +1,39 @@
+import java.util.*;
+
+class TripletSumToZero {
+
+  public static List<List<Integer>> searchTriplets(int[] arr) {
+    Arrays.sort(arr);
+    
+    List<List<Integer>> triplets = new ArrayList<>();
+    
+    for(int i=0;i+1<arr.length;i++) {
+      if(arr[i]!=arr[i+1]) {
+        int target=-arr[i];
+        int left=i+1;
+        int right=arr.length-1;
+        while(left<right) {
+          int currSum = arr[left] + arr[right];
+          if(currSum==target) {
+            List<Integer> list=new ArrayList<>();
+            list.add(arr[i]);list.add(arr[left]);list.add(arr[right]);
+            triplets.add(list);
+            left++;
+            right--;
+            while(left<right&&arr[left]==arr[left-1])
+            left++;
+            while(left<right&&arr[right]==arr[right+1])
+            right--;
+          }else if(currSum>target)
+            right--;
+            else
+            left++;
+
+          }
+        }
+
+      }
+    
+    return triplets;
+  }
+}
