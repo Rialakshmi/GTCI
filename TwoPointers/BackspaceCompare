@@ -1,0 +1,38 @@
+
+class BackspaceCompare {
+//Given two strings containing backspaces (identified by the character ‘#’), check if the two strings are equal.
+  public static boolean compare(String S, String T) {
+     StringBuffer sbS=new StringBuffer();
+        StringBuffer sbT=new StringBuffer();
+        int s=-1;
+        int t=-1;
+        for(char c:S.toCharArray()) {
+            if(c=='#'&&s>=0) {
+                sbS.deleteCharAt(s);
+                s--;
+            }
+                
+            else if(c!='#'){
+                sbS.append(c);
+                s++;
+            }
+        }
+        
+        for(char c:T.toCharArray()) {
+            if(c=='#'&&t>=0) {
+                sbT.deleteCharAt(t);
+                t--;
+            }
+                
+            else if(c!='#') {
+                sbT.append(c);
+                t++;
+            }
+        }
+        
+        if(sbS.toString().equals(sbT.toString()))
+            return true;
+        else
+            return false;
+  }
+}
