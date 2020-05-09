@@ -1,0 +1,61 @@
+
+class ListNode {
+  int value = 0;
+  ListNode next;
+
+  ListNode(int value) {
+    this.value = value;
+  }
+}
+
+class PalindromicLinkedList {
+
+  public static boolean isPalindrome(ListNode head) {
+   ListNode slow=head;
+        ListNode fast=head;
+        while(fast!=null&&fast.next!=null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if(slow==fast)
+                break;
+        }
+        ListNode secondHalfHead=reverse(slow);
+        ListNode copySecondHalfHead=secondHalfHead;
+        
+        while(head!=null&&secondHalfHead!=null) {
+            if(head.value!=secondHalfHead.value)
+                break;
+            head=head.next;
+            secondHalfHead=secondHalfHead.next;
+        }
+        
+        reverse(copySecondHalfHead);
+        if(head==null||secondHalfHead==null)
+            return true;
+        return false;
+  }
+
+    public static ListNode reverse(ListNode curr) {
+        ListNode prev=null;
+        while(curr!=null) {
+            ListNode temp=curr.next;
+            curr.next=prev;
+            prev=curr;
+            curr=temp;
+        }
+        
+        return prev;
+    }
+
+  public static void main(String[] args) {
+    ListNode head = new ListNode(2);
+    head.next = new ListNode(4);
+    head.next.next = new ListNode(6);
+    head.next.next.next = new ListNode(4);
+    head.next.next.next.next = new ListNode(2);
+    System.out.println("Is palindrome: " + PalindromicLinkedList.isPalindrome(head));
+
+    head.next.next.next.next.next = new ListNode(2);
+    System.out.println("Is palindrome: " + PalindromicLinkedList.isPalindrome(head));
+  }
+}
