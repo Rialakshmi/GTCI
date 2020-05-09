@@ -1,0 +1,38 @@
+class CircularArrayLoop {
+
+  public static boolean loopExists(int[] nums) {
+     for(int i=0;i<nums.length;i++) {
+            int slow = i;
+            int fast = i;
+            boolean isForward=nums[i]>=0;
+            do {
+                slow = move(nums,isForward,slow);
+                fast = move(nums,isForward,fast);
+                if(fast!=-1)
+                    fast=move(nums,isForward,fast);
+            } while(slow!=fast&&slow!=-1&&fast!=-1);
+            if(fast==slow&&slow!=-1)
+                return true;
+        }
+        
+        return false;
+  }
+
+   public static int move(int[]nums, boolean currentDirection,int currIndex) {
+        boolean nextDirection=nums[currIndex]>=0;
+        if(currentDirection!=nextDirection)
+            return -1;
+        int nextIndex = (currIndex +nums[currIndex]) % nums.length;
+        if(nextIndex<0)
+            nextIndex += nums.length;
+        if(nextIndex==currIndex)
+            return -1;
+        return nextIndex;
+    }
+
+  public static void main(String[] args) {
+    System.out.println(CircularArrayLoop.loopExists(new int[] { 1, 2, -1, 2, 2 }));
+    System.out.println(CircularArrayLoop.loopExists(new int[] { 2, 2, -1, 2 }));
+    System.out.println(CircularArrayLoop.loopExists(new int[] { 2, 1, -1, -2 }));
+  }
+}
