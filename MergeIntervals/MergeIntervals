@@ -1,0 +1,65 @@
+import java.util.*;
+
+class Interval {
+  int start;
+  int end;
+
+  public Interval(int start, int end) {
+    this.start = start;
+    this.end = end;
+  }
+};
+
+class MergeIntervals {
+
+  public static List<Interval> merge(List<Interval> intervals) {
+    if(intervals.size()<=1)
+    return intervals;
+    Collections.sort(intervals,(a,b)->Integer.compare(a.start,b.start));
+    Interval currentInterval=intervals.get(0);
+    List<Interval> mergedIntervals = new ArrayList<Interval>();
+    mergedIntervals.add(currentInterval);
+    for(Interval interval:intervals) {
+      int current_start=currentInterval.start;
+      int current_end=currentInterval.end;
+      int next_start=interval.start;
+      int next_end=interval.end;
+      if(current_end>=next_start)
+        currentInterval.end=Math.max(current_end,next_end);
+      else {
+        currentInterval=interval;
+        mergedIntervals.add(currentInterval);
+      }
+    }
+    return mergedIntervals;
+  }
+
+  public static void main(String[] args) {
+    List<Interval> input = new ArrayList<Interval>();
+    input.add(new Interval(1, 4));
+    input.add(new Interval(2, 5));
+    input.add(new Interval(7, 9));
+    System.out.print("Merged intervals: ");
+    for (Interval interval : MergeIntervals.merge(input))
+      System.out.print("[" + interval.start + "," + interval.end + "] ");
+    System.out.println();
+
+    input = new ArrayList<Interval>();
+    input.add(new Interval(6, 7));
+    input.add(new Interval(2, 4));
+    input.add(new Interval(5, 9));
+    System.out.print("Merged intervals: ");
+    for (Interval interval : MergeIntervals.merge(input))
+      System.out.print("[" + interval.start + "," + interval.end + "] ");
+    System.out.println();
+
+    input = new ArrayList<Interval>();
+    input.add(new Interval(1, 4));
+    input.add(new Interval(2, 6));
+    input.add(new Interval(3, 5));
+    System.out.print("Merged intervals: ");
+    for (Interval interval : MergeIntervals.merge(input))
+      System.out.print("[" + interval.start + "," + interval.end + "] ");
+    System.out.println();
+  }
+}
