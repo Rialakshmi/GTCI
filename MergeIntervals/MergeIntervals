@@ -13,25 +13,23 @@ class Interval {
 class MergeIntervals {
 
   public static List<Interval> merge(List<Interval> intervals) {
-    if(intervals.size()<=1)
-    return intervals;
-    Collections.sort(intervals,(a,b)->Integer.compare(a.start,b.start));
-    Interval currentInterval=intervals.get(0);
-    List<Interval> mergedIntervals = new ArrayList<Interval>();
-    mergedIntervals.add(currentInterval);
-    for(Interval interval:intervals) {
-      int current_start=currentInterval.start;
-      int current_end=currentInterval.end;
-      int next_start=interval.start;
-      int next_end=interval.end;
-      if(current_end>=next_start)
-        currentInterval.end=Math.max(current_end,next_end);
-      else {
-        currentInterval=interval;
-        mergedIntervals.add(currentInterval);
-      }
-    }
-    return mergedIntervals;
+   if(intervals.size()<=1)
+   return intervals;
+   Collections.sort(intervals,(a,b)->(a.start-b.start));
+   List<Interval> merge = new ArrayList<>();
+   int start = intervals.get(0).start;
+   int end = intervals.get(0).end;
+   for(Interval interval:intervals) {
+     if(interval.start<=end) {
+       end = Math.max(end,interval.end);
+     } else {
+       merge.add(new Interval(start,end));
+       start = interval.start;
+       end = interval.end;
+     }
+   }
+   merge.add(new Interval(start,end));
+   return merge;
   }
 
   public static void main(String[] args) {
